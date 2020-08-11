@@ -12,10 +12,15 @@
       (update hospital departamento conj pessoa)
       (throw (ex-info "Fila já está cheia" {:tentando-adicionar pessoa}))))
 
-(defn chega-em-pausado
+;função malvada que parece ser pura mas usa random e altera estado do random e loga
+(defn chega-em-pausado-logando
   [hospital departamento pessoa]
+  (println "tentando adicionar a pessoa" pessoa)
+  (Thread/sleep (* (rand) 2000))
   (if (cabe-na-fila? hospital departamento)
-    (do (Thread/sleep 1000)
+    (do
+      ;(Thread/sleep 1000)
+    (println "dando update" pessoa)
     (update hospital departamento conj pessoa))
     (throw (ex-info "Fila já está cheia" {:tentando-adicionar pessoa}))))
 
